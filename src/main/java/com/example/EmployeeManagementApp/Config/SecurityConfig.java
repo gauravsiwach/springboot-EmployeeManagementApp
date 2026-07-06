@@ -53,6 +53,9 @@ public class SecurityConfig {
                                  "/v3/api-docs/**"
                          ).permitAll()
 
+                         // Registration
+                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+
                          // Employee APIs
                          .requestMatchers(HttpMethod.GET, "/employees", "/employees/**")
                          .hasAnyRole("ADMIN", "USER")
