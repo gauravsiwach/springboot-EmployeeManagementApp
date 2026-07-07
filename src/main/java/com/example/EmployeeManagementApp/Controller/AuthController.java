@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.EmployeeManagementApp.Service.AuthService;
-
+import com.example.EmployeeManagementApp.Dto.LoginResponse;
 import jakarta.validation.Valid;
 
 import com.example.EmployeeManagementApp.Dto.RegisterRequest;
-
+import com.example.EmployeeManagementApp.Dto.LoginRequest;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,5 +22,10 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@Valid @RequestBody RegisterRequest registerRequest) {
         return authService.register(registerRequest);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) {
+        return authService.login(loginRequest);
     }
 }
