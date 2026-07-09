@@ -42,7 +42,7 @@ public class AuthService {
         AppUser user = new AppUser();
         user.setUsername(registerRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setRole(Role.ROLE_USER);
+        user.setRole(registerRequest.getRole());
         userRepository.save(user);
         return "User registered successfully";
     }

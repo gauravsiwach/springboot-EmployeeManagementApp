@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.example.EmployeeManagementApp.Security.JwtAuthenticationFilter;
 
  
+@EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -84,7 +86,40 @@ public class SecurityConfig {
         //          .httpBasic(Customizer.withDefaults());
             
         // return http.build();
-         http.csrf(csrf -> csrf.disable())
+
+
+        //  http.csrf(csrf -> csrf.disable())
+        //          .authorizeHttpRequests(auth -> auth
+
+        //                  // Swagger
+        //                  .requestMatchers(
+        //                          "/swagger-ui/**",
+        //                          "/swagger-ui.html",
+        //                          "/v3/api-docs/**"
+        //                  ).permitAll()
+
+        //                  // Registration, Login
+        //                  .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+        //                  .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+
+        //                  // Employee APIs
+        //                  .requestMatchers(HttpMethod.GET, "/employees", "/employees/**")
+        //                  .hasAnyRole("ADMIN", "USER")
+        //                  .requestMatchers(HttpMethod.POST, "/employees")
+        //                  .hasRole("ADMIN")
+        //                  .requestMatchers(HttpMethod.PUT, "/employees/**")
+        //                  .hasRole("ADMIN")
+        //                  .requestMatchers(HttpMethod.DELETE, "/employees/**")
+        //                  .hasRole("ADMIN")
+
+        //                  .anyRequest().authenticated()
+        //          )
+        //          .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        //          .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            
+        // return http.build();
+
+        http.csrf(csrf -> csrf.disable())
                  .authorizeHttpRequests(auth -> auth
 
                          // Swagger
@@ -99,15 +134,6 @@ public class SecurityConfig {
                          .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
                          // Employee APIs
-                         .requestMatchers(HttpMethod.GET, "/employees", "/employees/**")
-                         .hasAnyRole("ADMIN", "USER")
-                         .requestMatchers(HttpMethod.POST, "/employees")
-                         .hasRole("ADMIN")
-                         .requestMatchers(HttpMethod.PUT, "/employees/**")
-                         .hasRole("ADMIN")
-                         .requestMatchers(HttpMethod.DELETE, "/employees/**")
-                         .hasRole("ADMIN")
-
                          .anyRequest().authenticated()
                  )
                  .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
