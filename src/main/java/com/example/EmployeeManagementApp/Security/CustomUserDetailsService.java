@@ -2,7 +2,13 @@ package com.example.EmployeeManagementApp.Security;
 
 import com.example.EmployeeManagementApp.Entity.AppUser;
 import com.example.EmployeeManagementApp.Repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,10 +27,22 @@ public class CustomUserDetailsService implements UserDetailsService {
     
         AppUser user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        // return User.builder()
+        //         .username(user.getUsername())
+        //         .password(user.getPassword())
+        //         .roles(user.getRole().name().replace("ROLE_", ""))
+        //         .build();
+
+        List<GrantedAuthority> authorities =  new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
+        user.getRole().getAuthorities().forEach(
+                permission -> authorities.add(new SimpleGrantedAuthority(permission))
+        );
+        
         return User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .roles(user.getRole().name().replace("ROLE_", ""))
+                .authorities(authorities)
                 .build();
     }
     

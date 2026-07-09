@@ -21,7 +21,8 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    // @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAuthority('EMPLOYEE_READ')")
     public ApiResponse<List<EmployeeResponse>> getEmployees()
     {
         List<EmployeeResponse> employeeResponses = employeeService.getAllEmployee();
@@ -32,7 +33,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    @PostAuthorize("hasRole('ADMIN') or returnObject.data.name == authentication.name")
+    // @PostAuthorize("hasRole('ADMIN') or returnObject.data.name == authentication.name")
+    @PreAuthorize("hasAuthority('EMPLOYEE_READ')")
     public ApiResponse<EmployeeResponse> getEmployeeById(@PathVariable Long id)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,7 +53,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('EMPLOYEE_CREATE')")
     public  ApiResponse<EmployeeResponse> createEmployees(@Valid @RequestBody EmployeeRequest employee)
     {
         EmployeeResponse employeeResponse = employeeService.save(employee);
@@ -62,7 +65,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('EMPLOYEE_UPDATE')")
     public ApiResponse<EmployeeResponse> updateEmployee(@PathVariable Long id,  @RequestBody EmployeeRequest employee)
     {
         EmployeeResponse employeeResponse = employeeService.updateEmployee(id, employee);
@@ -73,7 +77,8 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('EMPLOYEE_DELETE')")
     public ApiResponse<Void> deleteEmployeeById(@PathVariable Long id)
     {
           employeeService.deleteEmployeeById(id);
