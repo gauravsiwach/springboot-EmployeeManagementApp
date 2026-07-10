@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="employees")
-public class Employee
+public class Employee extends BaseAuditableEntity
 {
 
 
