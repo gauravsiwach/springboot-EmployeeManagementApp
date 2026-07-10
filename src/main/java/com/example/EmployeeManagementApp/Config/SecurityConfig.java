@@ -1,6 +1,8 @@
 package com.example.EmployeeManagementApp.Config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import com.example.EmployeeManagementApp.Security.CustomAccessDeniedHandler;
+import com.example.EmployeeManagementApp.Security.JwtAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,12 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -137,6 +145,9 @@ public class SecurityConfig {
                          .anyRequest().authenticated()
                  )
                  .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                 .exceptionHandling(exception -> 
+                    exception.authenticationEntryPoint(authenticationEntryPoint)
+                    .accessDeniedHandler(customAccessDeniedHandler))
                  .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
             
         return http.build();
