@@ -13,17 +13,17 @@ public class AddressRequest {
     private String state;
     @NotBlank(message = "Country is mandatory")
     private String country;
-    @NotBlank(message = "Pin code is mandatory")
-    private String pinCode;
+    @NotBlank(message = "Zip code is mandatory")
+    private String zipCode;
 
     public AddressRequest() {
     }
 
-    public AddressRequest(String city, String state, String country, String pinCode) {
+    public AddressRequest(String city, String state, String country, String zipCode) {
         this.city = city;
         this.state = state;
         this.country = country;
-        this.pinCode = pinCode;
+        this.zipCode = zipCode;
     }
 
     public String getCity() {
@@ -50,11 +50,11 @@ public class AddressRequest {
         this.country = country;
     }
 
-    public String getPinCode() {
-        return pinCode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setPinCode(String pinCode) {
-        this.pinCode = pinCode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

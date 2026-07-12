@@ -9,7 +9,6 @@ public class Address extends BaseAuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long addressId;
-
     private String street;
     private String city;
     private String state;

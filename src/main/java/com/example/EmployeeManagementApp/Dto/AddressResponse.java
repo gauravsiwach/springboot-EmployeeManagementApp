@@ -1,11 +1,12 @@
 package com.example.EmployeeManagementApp.Dto;
 
-
 import jakarta.validation.constraints.NotBlank;
 
 
-
 public class AddressResponse {
+
+    private Long addressId;
+    private String street;
 
     @NotBlank(message = "City is mandatory")
     private String city;
@@ -13,17 +14,35 @@ public class AddressResponse {
     private String state;
     @NotBlank(message = "Country is mandatory")
     private String country;
-    @NotBlank(message = "Pin code is mandatory")
-    private String pinCode;
+    @NotBlank(message = "Zip code is mandatory")
+    private String zipCode;
 
     public AddressResponse() {
     }
 
-    public AddressResponse(String city, String state, String country, String pinCode) {
+    public AddressResponse(Long addressId, String street, String city, String state, String country, String zipCode) {
+        this.addressId = addressId;
+        this.street = street;
         this.city = city;
         this.state = state;
         this.country = country;
-        this.pinCode = pinCode;
+        this.zipCode = zipCode;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getCity() {
@@ -50,11 +69,12 @@ public class AddressResponse {
         this.country = country;
     }
 
-    public String getPinCode() {
-        return pinCode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setPinCode(String pinCode) {
-        this.pinCode = pinCode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
+
 }
